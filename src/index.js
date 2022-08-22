@@ -26,7 +26,7 @@ function searchCountry(e) {
   const countryName = refs.inputRef.value.trim();
 
   fetchCountries(countryName)
-    .then(renderCountryCard)
+    .then(renderCountriesCard)
     .catch(error => {
       clearData();
       Notiflix.Notify.failure('Oops, there is no country with that name');
@@ -38,35 +38,35 @@ function clearData() {
   refs.countryInfo.innerHTML = '';
 }
 
-function renderCountryCard(countries) {
+function renderCountriesCard(countries) {
   console.log(countries);
   clearData();
 
   if (countries.length > 10) {
     Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
   } else if (countries.length === 1) {
-    refs.countryInfo.innerHTML = createCountriesList(countries[0]);
+    refs.countryInfo.innerHTML = createCountryCard(countries[0]);
   } else {
     let countryListMarkUp = '';
 
-    // countries.map(country => (countryListMarkUp += createListItem(country)));
-    countries.reduce(
-      (countryListMarkUp, country) => countryListMarkUp + createListItem(country),
-      '',
-    );
+    countries.map(country => (countryListMarkUp += createCountriesList(country)));
+    // countries.reduce(
+    //   (countryListMarkUp, country) => countryListMarkUp + createCountriesList(country),
+    //   '',
+    // );
 
     refs.countryList.insertAdjacentHTML('beforeend', countryListMarkUp);
   }
 }
 
-function createListItem({ name, flags }) {
+function createCountriesList({ name, flags }) {
   return `
     <li class="countries__list">
         <img class="flag-img" src="${flags.svg}" alt="flag" width="45" height="30"> <p class="name-countries"><b>${name.common}</b></p>
     </li>`;
 }
 
-function createCountriesList({ name, capital, population, languages, flags }) {
+function createCountryCard({ name, capital, population, languages, flags }) {
   return `
     <div class="country-info__card">
     <h2 class="country-info__name">${name.common}</h2>
