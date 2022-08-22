@@ -29,7 +29,7 @@ function searchCountry(e) {
     .then(renderCountryCard)
     .catch(error => {
       clearData();
-      Notiflix.Notify.info('Oops, there is no country with that name');
+      Notiflix.Notify.failure('Oops, there is no country with that name');
     });
 }
 
