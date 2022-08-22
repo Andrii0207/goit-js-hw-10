@@ -26,7 +26,7 @@ function searchCountry(e) {
   const countryName = refs.inputRef.value.trim();
 
   fetchCountries(countryName)
-    .then(countryCard)
+    .then(renderCountryCard)
     .catch(error => {
       clearData();
       Notiflix.Notify.info('Oops, there is no country with that name');
@@ -38,7 +38,10 @@ function clearData() {
   refs.countryInfo.innerHTML = '';
 }
 
-function countryCard(countries) {
+function renderCountryCard(countries) {
+  console.log(countries);
+  clearData();
+
   if (countries.length > 10) {
     Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
   } else if (countries.length === 1) {
@@ -55,8 +58,8 @@ function countryCard(countries) {
 
 function createListItem({ name, flags }) {
   return `
-    <li class="country__item">
-        <img src="${flags.svg}" alt="flag" width="35" height="20"> <p><b>${name.common}</b></p>
+    <li class="countries__list">
+        <img class="flag-img" src="${flags.svg}" alt="flag" width="45" height="30"> <p class="name-countries"><b>${name.common}</b></p>
     </li>`;
 }
 
