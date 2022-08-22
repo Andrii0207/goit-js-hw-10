@@ -49,8 +49,11 @@ function renderCountryCard(countries) {
   } else {
     let countryListMarkUp = '';
 
-    countries.map(country => (countryListMarkUp += createListItem(country)));
-    // countries.reduce((acc, country) => acc + createListItem(country), '');
+    // countries.map(country => (countryListMarkUp += createListItem(country)));
+    countries.reduce(
+      (countryListMarkUp, country) => countryListMarkUp + createListItem(country),
+      '',
+    );
 
     refs.countryList.insertAdjacentHTML('beforeend', countryListMarkUp);
   }
