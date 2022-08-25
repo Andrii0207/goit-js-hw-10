@@ -1,24 +1,12 @@
 import './css/styles.css';
 import debounce from 'lodash.debounce';
 import Notiflix from 'notiflix';
-// import API from '../fetchCountries';
+import fetchCountries from '../fetchCountries';
+import { refs } from '../refs';
 
 const DEBOUNCE_DELAY = 300;
 
-const refs = {
-  inputRef: document.querySelector('#search-box'),
-  countryList: document.querySelector('.country-list'),
-  countryInfo: document.querySelector('.country-info'),
-};
-
 refs.inputRef.addEventListener('input', debounce(searchCountry, DEBOUNCE_DELAY));
-
-function fetchCountries(name) {
-  const BASE_URL = 'https://restcountries.com/v3.1';
-  const URL = `${BASE_URL}/name/${name}?fields=name,capital,population,flags,languages`;
-
-  return fetch(URL).then(response => response.json());
-}
 
 function searchCountry(e) {
   e.preventDefault();
@@ -50,11 +38,6 @@ function renderCountriesCard(countries) {
     let countryListMarkUp = '';
 
     countries.map(country => (countryListMarkUp += createCountriesList(country)));
-    // countries.reduce(
-    //   (countryListMarkUp, country) => countryListMarkUp + createCountriesList(country),
-    //   '',
-    // );
-
     refs.countryList.insertAdjacentHTML('beforeend', countryListMarkUp);
   }
 }
