@@ -2,9 +2,14 @@ import './css/styles.css';
 import debounce from 'lodash.debounce';
 import Notiflix from 'notiflix';
 import fetchCountries from '../fetchCountries';
-import { refs } from '../refs';
 
 const DEBOUNCE_DELAY = 300;
+
+export const refs = {
+  inputRef: document.querySelector('#search-box'),
+  countryList: document.querySelector('.country-list'),
+  countryInfo: document.querySelector('.country-info'),
+};
 
 refs.inputRef.addEventListener('input', debounce(searchCountry, DEBOUNCE_DELAY));
 
@@ -45,14 +50,14 @@ function renderCountriesCard(countries) {
 function createCountriesList({ name, flags }) {
   return `
     <li class="countries__list">
-        <img class="flag-img" src="${flags.svg}" alt="flag" width="45" height="30"> <p class="name-countries"><b>${name.common}</b></p>
+        <img class="flag-img" src="${flags.svg}" alt="flag" width="45" height="30"> <p class="name-countries"><b>${name.official}</b></p>
     </li>`;
 }
 
 function createCountryCard({ name, capital, population, languages, flags }) {
   return `
     <div class="country-info__card">
-    <h2 class="country-info__name">${name.common}</h2>
+    <h2 class="country-info__name">${name.official}</h2>
     <img src="${flags.svg}" class="country-info__flag" width="200px" height="120px">
     <ul class="country-info__features">
         <li class="country-info__feature">
