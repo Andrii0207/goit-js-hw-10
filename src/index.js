@@ -13,8 +13,8 @@ const refs = {
 
 refs.inputRef.addEventListener('input', debounce(searchCountry, DEBOUNCE_DELAY));
 
-function searchCountry(e) {
-  e.preventDefault();
+function searchCountry(event) {
+  event.preventDefault();
 
   const countryName = refs.inputRef.value.trim();
 
