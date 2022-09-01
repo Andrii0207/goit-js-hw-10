@@ -5,7 +5,7 @@ import fetchCountries from '../fetchCountries';
 
 const DEBOUNCE_DELAY = 300;
 
-export const refs = {
+const refs = {
   inputRef: document.querySelector('#search-box'),
   countryList: document.querySelector('.country-list'),
   countryInfo: document.querySelector('.country-info'),
@@ -21,7 +21,6 @@ function searchCountry(e) {
   fetchCountries(countryName)
     .then(renderCountriesCard)
     .catch(error => {
-      clearData();
       Notiflix.Notify.failure('Oops, there is no country with that name');
     });
 }
@@ -58,7 +57,7 @@ function createCountryCard({ name, capital, population, languages, flags }) {
   return `
     <div class="country-info__card">
     <h2 class="country-info__name">${name.official}</h2>
-    <img src="${flags.svg}" class="country-info__flag" width="200px" height="120px">
+    <img src="${flags.svg}" class="country-info__flag" width="200px" height="150px">
     <ul class="country-info__features">
         <li class="country-info__feature">
             <h3>Capital:&nbsp;</h3>
