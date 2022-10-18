@@ -16,9 +16,9 @@ refs.inputRef.addEventListener('input', debounce(searchCountry, DEBOUNCE_DELAY))
 function searchCountry(event) {
   event.preventDefault();
 
-  const countryName = refs.inputRef.value.trim();
+  const inputCountryName = refs.inputRef.value.trim();
 
-  fetchCountries(countryName)
+  fetchCountries(inputCountryName)
     .then(renderCountriesCard)
     .catch(error => {
       Notiflix.Notify.failure('Oops, there is no country with that name');
@@ -37,23 +37,22 @@ function renderCountriesCard(countries) {
   if (countries.length > 10) {
     Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
   } else if (countries.length === 1) {
-    refs.countryInfo.innerHTML = createCountryCard(countries[0]);
+    refs.countryInfo.innerHTML = renderCountryCard(countries[0]);
   } else {
-    let countryListMarkUp = '';
-
-    countries.map(country => (countryListMarkUp += createCountriesList(country)));
+    const countryListMarkUp = countries.map(country => renderCountriesList(country)).join('');
     refs.countryList.insertAdjacentHTML('beforeend', countryListMarkUp);
   }
 }
 
-function createCountriesList({ name, flags }) {
+function renderCountriesList({ name, flags }) {
   return `
     <li class="countries__list">
-        <img class="flag-img" src="${flags.svg}" alt="flag" width="45" height="30"> <p class="name-countries"><b>${name.official}</b></p>
+        <img class="flag-img" src="${flags.svg}" alt="flag" width="45" height="30"> 
+        <p class="name-countries"><b>${name.official}</b></p>
     </li>`;
 }
 
-function createCountryCard({ name, capital, population, languages, flags }) {
+function renderCountryCard({ name, capital, population, languages, flags }) {
   return `
     <div class="country-info__card">
     <h2 class="country-info__name">${name.official}</h2>
@@ -69,7 +68,7 @@ function createCountryCard({ name, capital, population, languages, flags }) {
         </li>
         <li class="country-info__feature">
             <h3>Languages:&nbsp;</h3>
-            <p>${Object.values(languages)}</p>
+            <p>${Object.values(languages).join(', ')}</p>
         </li>
     </ul>
     </div>
